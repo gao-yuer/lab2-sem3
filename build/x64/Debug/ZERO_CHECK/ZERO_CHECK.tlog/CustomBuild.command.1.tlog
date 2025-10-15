@@ -1,0 +1,10 @@
+^C:\USERS\КСЕНИЯ\DESKTOP\LABA2_SEM3\LAB2-SEM3\BUILD\CMAKEFILES\C2913C44F6119498E2ED63CB29ECF880\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Ксения/Desktop/laba2_sem3/lab2-sem3 -BC:/Users/Ксения/Desktop/laba2_sem3/lab2-sem3/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Ксения/Desktop/laba2_sem3/lab2-sem3/build/BlasApp.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

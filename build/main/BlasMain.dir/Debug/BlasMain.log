@@ -1,0 +1,4 @@
+﻿  main.cpp
+C:\Users\Ксения\Desktop\laba2_sem3\lab2-sem3\blaslib\TSqTriangMatrix.h(408,1): warning C4172: возвращаемый адрес локальной переменной или временного 
+C:\Users\Ксения\Desktop\laba2_sem3\lab2-sem3\blaslib\TSquareTapeMatrix.h(381,1): warning C4172: возвращаемый адрес локальной переменной или временного 
+  BlasMain.vcxproj -> C:\Users\Ксения\Desktop\laba2_sem3\lab2-sem3\build\main\Debug\BlasMain.exe
