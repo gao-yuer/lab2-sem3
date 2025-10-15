@@ -1,6 +1,0 @@
-C:/Users/Ксения/Desktop/laba2_sem3/lab2-sem3/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/Ксения/Desktop/laba2_sem3/lab2-sem3/build/CMakeFiles/ZERO_CHECK.dir
-C:/Users/Ксения/Desktop/laba2_sem3/lab2-sem3/build/main/CMakeFiles/BlasMain.dir
-C:/Users/Ксения/Desktop/laba2_sem3/lab2-sem3/build/blaslib/CMakeFiles/BlasLibrary.dir
-C:/Users/Ксения/Desktop/laba2_sem3/lab2-sem3/build/gtest/CMakeFiles/gtest.dir
-C:/Users/Ксения/Desktop/laba2_sem3/lab2-sem3/build/test/CMakeFiles/BirchTest.dir
