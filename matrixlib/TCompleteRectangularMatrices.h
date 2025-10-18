@@ -1,5 +1,5 @@
 #pragma once
-#include "..//blaslib/TVector.h"  
+#include "..//matrixlib/TVector.h"
 #include <iostream>
 #include <functional>
 

@@ -1,7 +1,8 @@
 #include <gtest.h>
 #include <cmath>
 #include <sstream>
-#include "..//blaslib/TSqTriangMatrix.h"
+#include "..//matrixlib/TSqTriangMatrix.h"
+
 
 TEST(TSqTriangMatrixTest, DefaultConstructor)
 {
@@ -24,24 +25,6 @@ TEST(TSqTriangMatrixTest, ParameterizedConstructor)
   EXPECT_FALSE(mat2.IsUpper());
 }
 
-//TEST(TSqTriangMatrixTest, ParameterizedConstructorWithValue)
-//{
-//  TSqTriangMatrix<int> mat(4, true, 7);
-//  EXPECT_EQ(mat.GetSize(), 4);
-//  EXPECT_TRUE(mat.IsUpper());
-//
-//  // Проверяем, что элементы внутри треугольника инициализированы значением 7
-//  for (int i = 0; i < 4; i++)
-//  {
-//    for (int j = 0; j < 4; j++)
-//    {
-//      if (mat.IsInTriangle(i, j))
-//      {
-//        EXPECT_EQ(mat(i, j), 7);
-//      }
-//    }
-//  }
-//}
 
 TEST(TSqTriangMatrixTest, CopyConstructor)
 {
@@ -286,19 +269,6 @@ TEST(TSqTriangMatrixTest, MatrixMultiplication)
   EXPECT_EQ(result(1, 1), 12);
 }
 
-//TEST(TSqTriangMatrixTest, CountOccurrences)
-//{
-//  TSqTriangMatrix<int> mat(4, true);
-//  mat(0, 0) = 1; mat(0, 1) = 2; mat(0, 2) = 1; mat(0, 3) = 3;
-//  mat(1, 1) = 1; mat(1, 2) = 2; mat(1, 3) = 1;
-//  mat(2, 2) = 1; mat(2, 3) = 4;
-//  mat(3, 3) = 2;
-//
-//  EXPECT_EQ(mat.CountOccurrences(1), 6);
-//  EXPECT_EQ(mat.CountOccurrences(2), 3);
-//  EXPECT_EQ(mat.CountOccurrences(5), 0);
-//}
-
 TEST(TSqTriangMatrixTest, FirstNorm)
 {
   TSqTriangMatrix<double> mat(3, true);
@@ -310,18 +280,6 @@ TEST(TSqTriangMatrixTest, FirstNorm)
   double result = mat.FirstNorm();
   EXPECT_NEAR(result, 14.0, 1e-10);
 }
-
-//TEST(TSqTriangMatrixTest, SecondNorm)
-//{
-//  TSqTriangMatrix<double> mat(3, true);
-//  mat(0, 0) = 3; mat(0, 1) = 4;
-//  mat(1, 1) = 1; mat(1, 2) = 2;
-//  mat(2, 2) = 1;
-//
-//  // sqrt(3? + 4? + 1? + 2? + 1?) = sqrt(9+16+1+4+1) = sqrt(31)
-//  double result = mat.SecondNorm();
-//  EXPECT_NEAR(result, std::sqrt(31.0), 1e-10);
-//}
 
 TEST(TSqTriangMatrixTest, InfinityNorm)
 {

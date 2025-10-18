@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "..//blaslib/TVector.h"
+#include "..//matrixlib/TVector.h"
 #include <functional>
 #include <cmath>
 #include <algorithm>

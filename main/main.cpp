@@ -1,160 +1,54 @@
-#include <iostream>
-#include "..//blaslib/TVector.h"
-#include "..//blaslib/TCompleteRectangularMatrices.h"
-#include "..//blaslib/TDecRecMatrix.h"
-#include "..//blaslib/TSqTriangMatrix.h"
-#include "..//blaslib/TSquareTapeMatrix.h"
-#include <ctime>
+п»ї#include <iostream>
+#include "..//matrixlib/TVector.h"
+#include "..//matrixlib/TCompleteRectangularMatrices.h"
+#include "..//matrixlib/TDecRecMatrix.h"
+#include "..//matrixlib/TSqTriangMatrix.h"
+#include "..//matrixlib/TSquareTapeMatrix.h"
 
 
-#include <chrono>
-#include <vector>
-
-
-// Шаблонная функция для измерения времени выполнения операции
-template<typename Func>
-double measureTime(Func operation, int iterations = 1000) {
-  auto start = std::chrono::high_resolution_clock::now();
-
-  for (int i = 0; i < iterations; ++i) {
-    operation();
-  }
-
-  auto end = std::chrono::high_resolution_clock::now();
-  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-
-  return duration.count() / static_cast<double>(iterations);
-}
 
 int main() {
-  std::cout << "=== СРАВНЕНИЕ ПРОИЗВОДИТЕЛЬНОСТИ КЛАССОВ МАТРИЦ ===\n" << std::endl;
+  try {
+    TSqTriangMatrix<double> triang(3, true);
+    triang(0, 0) = 1.0; triang(0, 1) = 2.0; triang(0, 2) = 3.0;
+    triang(1, 1) = 4.0; triang(1, 2) = 5.0;
+    triang(2, 2) = 6.0;
 
-  // Размеры матриц для тестирования
-  const int SMALL_SIZE = 10;
-  const int MEDIUM_SIZE = 50;
-  const int LARGE_SIZE = 100;
+    TSquareTapeMatrix<int> tape(4, 2);
+    tape(0, 0) = 1; tape(0, 1) = 2;
+    tape(1, 0) = 3; tape(1, 1) = 4; tape(1, 2) = 5;
+    tape(2, 1) = 6; tape(2, 2) = 7; tape(2, 3) = 8;
+    tape(3, 2) = 9; tape(3, 3) = 10;
 
-  // Тестируем для разных размеров
-  std::vector<int> sizes = { SMALL_SIZE, MEDIUM_SIZE, LARGE_SIZE };
+    TComplRectMatrix<float> rect(2, 3);
+    rect[0][0] = 1.1f; rect[0][1] = 2.2f; rect[0][2] = 3.3f;
+    rect[1][0] = 4.4f; rect[1][1] = 5.5f; rect[1][2] = 6.6f;
 
-  for (int size : sizes) {
-    std::cout << "=== РАЗМЕР МАТРИЦ: " << size << "x" << size << " ===" << std::endl;
+    TDecRecMatrix<int> sparse(3);
+    sparse.SetElement(0, 0, 10);
+    sparse.SetElement(0, 2, 20);
+    sparse.SetElement(1, 1, 30);
+    sparse.SetElement(2, 0, 40);
+    sparse.SetElement(2, 2, 50);
 
-    // Создаем матрицы для тестирования
-    TComplRectMatrix<double> rect1(size, size, 1.5);
-    TComplRectMatrix<double> rect2(size, size, 2.5);
+    std::cout << "1. TRIANGULAR MATRIX:\n" << triang;
+    std::cout << "2. TAPE MATRIX:\n" << tape;
+    std::cout << "3. RECTANGULAR MATRIX:\n" << rect;
+    std::cout << "4. SPARSE MATRIX:\n" << sparse;
 
-    TSquareTapeMatrix<double> tape1(size, 3);
-    TSquareTapeMatrix<double> tape2(size, 3);
+    auto scaledRect = rect * 2.0f;
+    std::cout << "Rectangular matrix Г— 2:\n" << scaledRect;
 
-    TSqTriangMatrix<double> triang1(size, true, 1.5);
-    TSqTriangMatrix<double> triang2(size, true, 2.5);
+    std::cout << "The number of nonzero elements in a sparse matrix: "
+      << sparse.GetNonZeroCount() << "\n";
 
-    TDecRecMatrix<double> sparse1(size);
-    TDecRecMatrix<double> sparse2(size);
+    std::cout << "Second norm trangl matrix: " << triang.SecondNorm() << "\n";
 
-    // Заполняем разреженные матрицы некоторыми значениями
-    for (int i = 0; i < size; i += 2) {
-      for (int j = 0; j < size; j += 2) {
-        sparse1(i, j) = 1.5;
-        sparse2(i, j) = 2.5;
-      }
-    }
-
-    // Тестируем операции сложения
-    std::cout << "\n--- СЛОЖЕНИЕ ---" << std::endl;
-    double time_rect_add = measureTime([&]() { auto result = rect1 + rect2; });
-    double time_tape_add = measureTime([&]() { auto result = tape1 + tape2; });
-    double time_triang_add = measureTime([&]() { auto result = triang1 + triang2; });
-    double time_sparse_add = measureTime([&]() { auto result = sparse1 + sparse2; });
-
-    std::cout << "Прямоугольные матрицы: " << time_rect_add << " мкс" << std::endl;
-    std::cout << "Ленточные матрицы: " << time_tape_add << " мкс" << std::endl;
-    std::cout << "Треугольные матрицы: " << time_triang_add << " мкс" << std::endl;
-    std::cout << "Разреженные матрицы: " << time_sparse_add << " мкс" << std::endl;
-
-    // Тестируем операции вычитания
-    std::cout << "\n--- ВЫЧИТАНИЕ ---" << std::endl;
-    double time_rect_sub = measureTime([&]() { auto result = rect1 - rect2; });
-    double time_tape_sub = measureTime([&]() { auto result = tape1 - tape2; });
-    double time_triang_sub = measureTime([&]() { auto result = triang1 - triang2; });
-    double time_sparse_sub = measureTime([&]() { auto result = sparse1 - sparse2; });
-
-    std::cout << "Прямоугольные матрицы: " << time_rect_sub << " мкс" << std::endl;
-    std::cout << "Ленточные матрицы: " << time_tape_sub << " мкс" << std::endl;
-    std::cout << "Треугольные матрицы: " << time_triang_sub << " мкс" << std::endl;
-    std::cout << "Разреженные матрицы: " << time_sparse_sub << " мкс" << std::endl;
-
-    // Тестируем операции умножения на скаляр
-    std::cout << "\n--- УМНОЖЕНИЕ НА СКАЛЯР ---" << std::endl;
-    double time_rect_scalar = measureTime([&]() { auto result = rect1 * 2.0; });
-    double time_tape_scalar = measureTime([&]() { auto result = tape1 * 2.0; });
-    double time_triang_scalar = measureTime([&]() { auto result = triang1 * 2.0; });
-    double time_sparse_scalar = measureTime([&]() { auto result = sparse1 * 2.0; });
-
-    std::cout << "Прямоугольные матрицы: " << time_rect_scalar << " мкс" << std::endl;
-    std::cout << "Ленточные матрицы: " << time_tape_scalar << " мкс" << std::endl;
-    std::cout << "Треугольные матрицы: " << time_triang_scalar << " мкс" << std::endl;
-    std::cout << "Разреженные матрицы: " << time_sparse_scalar << " мкс" << std::endl;
-
-    // Тестируем операции умножения матриц (только для небольших размеров)
-    if (size <= MEDIUM_SIZE) {
-      std::cout << "\n--- УМНОЖЕНИЕ МАТРИЦ ---" << std::endl;
-      double time_rect_mult = measureTime([&]() { auto result = rect1 * rect2; }, 10);
-      double time_tape_mult = measureTime([&]() { auto result = tape1 * tape2; }, 10);
-      double time_triang_mult = measureTime([&]() { auto result = triang1 * triang2; }, 10);
-      double time_sparse_mult = measureTime([&]() { auto result = sparse1 * sparse2; }, 10);
-
-      std::cout << "Прямоугольные матрицы: " << time_rect_mult << " мкс" << std::endl;
-      std::cout << "Ленточные матрицы: " << time_tape_mult << " мкс" << std::endl;
-      std::cout << "Треугольные матрицы: " << time_triang_mult << " мкс" << std::endl;
-      std::cout << "Разреженные матрицы: " << time_sparse_mult << " мкс" << std::endl;
-    }
-
-    // Тестируем доступ к элементам
-    /*std::cout << "\n--- ДОСТУП К ЭЛЕМЕНТАМ ---" << std::endl;
-    double time_rect_access = measureTime([&]() {
-      double sum = 0;
-      for (int i = 0; i < size; ++i) {
-        for (int j = 0; j < size; ++j) {
-          sum += rect1(i, j);
-        }
-      }
-      });*/
-
-    double time_tape_access = measureTime([&]() {
-      double sum = 0;
-      for (int i = 0; i < size; ++i) {
-        for (int j = 0; j < size; ++j) {
-          sum += tape1(i, j);
-        }
-      }
-      });
-
-    double time_triang_access = measureTime([&]() {
-      double sum = 0;
-      for (int i = 0; i < size; ++i) {
-        for (int j = 0; j < size; ++j) {
-          sum += triang1(i, j);
-        }
-      }
-      });
-
-    double time_sparse_access = measureTime([&]() {
-      double sum = 0;
-      for (int i = 0; i < size; ++i) {
-        for (int j = 0; j < size; ++j) {
-          sum += sparse1(i, j);
-        }
-      }
-      });
-
-    //std::cout << "Прямоугольные матрицы: " << time_rect_access << " мкс" << std::endl;
-    std::cout << "Ленточные матрицы: " << time_tape_access << " мкс" << std::endl;
-    std::cout << "Треугольные матрицы: " << time_triang_access << " мкс" << std::endl;
-    std::cout << "Разреженные матрицы: " << time_sparse_access << " мкс" << std::endl;
-
-    std::cout << "\n" << std::string(50, '=') << std::endl;
   }
+  catch (const std::exception& err) {
+    std::cerr << "Error: " << err.what() << std::endl;
+    return 1;
+  }
+
   return 0;
 }

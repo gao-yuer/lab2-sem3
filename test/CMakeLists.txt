@@ -1,4 +1,4 @@
-set(target BirchTest)
+set(target MatrixTest)
 
 file(GLOB hdrs "*.h*")
 file(GLOB srcs "*.cpp")

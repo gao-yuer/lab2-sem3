@@ -1,4 +1,4 @@
-#include "../blaslib/TVector.h"
+#include "..//matrixlib/TVector.h"
 
 #include <gtest.h>
 #include <cmath>

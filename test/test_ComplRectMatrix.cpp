@@ -1,5 +1,5 @@
-﻿#include "..//blaslib/TCompleteRectangularMatrices.h"
-
+﻿
+#include "..//matrixlib/TCompleteRectangularMatrices.h"
 #include <gtest.h>
 #include <cmath>
 

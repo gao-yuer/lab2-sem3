@@ -1,7 +1,7 @@
 #include <gtest.h>
 #include <cmath>
 #include <sstream>
-#include "..//blaslib/TDecRecMatrix.h"
+#include "..//matrixlib/TDecRecMatrix.h"
 
 
 TEST(TDecRecMatrixTest, DefaultConstructor)
@@ -12,16 +12,6 @@ TEST(TDecRecMatrixTest, DefaultConstructor)
   EXPECT_EQ(mat.GetZeroValue(), 0);
   EXPECT_EQ(mat.GetNonZeroCount(), 0);
 }
-
-//TEST(TDecRecMatrixTest, ParameterizedConstructor)
-//{
-//  TDecRecMatrix<double> mat(5);
-//  EXPECT_FALSE(mat.IsEmpty());
-//  EXPECT_EQ(mat.GetSize(), 5);
-//  EXPECT_EQ(mat.GetZeroValue(), 0.0);
-//  EXPECT_EQ(mat.GetNonZeroCount(), 0);
-//  EXPECT_TRUE(mat.IsFull());
-//}
 
 TEST(TDecRecMatrixTest, ParameterizedConstructorWithZeroValue)
 {
@@ -168,36 +158,6 @@ TEST(TDecRecMatrixTest, ConstOperatorAccess)
   EXPECT_EQ(mat(0, 1), 0);
   EXPECT_EQ(mat(2, 0), 0);
 }
-
-//TEST(TDecRecMatrixTest, SetElementAndRemoveElement)
-//{
-//  TDecRecMatrix<int> mat(3);
-//
-//  // Добавление элементов
-//  mat.SetElement(0, 0, 1);
-//  mat.SetElement(1, 1, 2);
-//  mat.SetElement(2, 2, 3);
-//
-//  EXPECT_EQ(mat.GetNonZeroCount(), 3);
-//  EXPECT_EQ(mat(0, 0), 1);
-//  EXPECT_EQ(mat(1, 1), 2);
-//  EXPECT_EQ(mat(2, 2), 3);
-//
-//  // Обновление элемента
-//  mat.SetElement(1, 1, 5);
-//  EXPECT_EQ(mat(1, 1), 5);
-//  EXPECT_EQ(mat.GetNonZeroCount(), 3);
-//
-//  // Установка нулевого значения (удаление)
-//  mat.SetElement(1, 1, 0);
-//  EXPECT_EQ(mat(1, 1), 0);
-//  EXPECT_EQ(mat.GetNonZeroCount(), 2);
-//
-//  // Явное удаление
-//  mat.RemoveElement(0, 0);
-//  EXPECT_EQ(mat(0, 0), 0);
-//  EXPECT_EQ(mat.GetNonZeroCount(), 1);
-//}
 
 TEST(TDecRecMatrixTest, AdditionOperator)
 {
@@ -407,24 +367,6 @@ TEST(TDecRecMatrixTest, EmptyMatrixOperations)
     });
 }
 
-//TEST(TDecRecMatrixTest, CustomZeroValue)
-//{
-//  // Тестируем матрицу с кастомным нулевым значением
-//  TDecRecMatrix<int> mat(3, -1);
-//
-//  mat(0, 0) = 1;
-//  mat(1, 1) = 2;
-//
-//  EXPECT_EQ(mat(0, 0), 1);
-//  EXPECT_EQ(mat(1, 1), 2);
-//  EXPECT_EQ(mat(0, 1), -1); // Кастомное нулевое значение
-//
-//  // Установка кастомного нуля должна удалять элемент
-//  mat.SetElement(1, 1, -1);
-//  EXPECT_EQ(mat(1, 1), -1);
-//  EXPECT_EQ(mat.GetNonZeroCount(), 1); // Остался только один элемент
-//}
-
 TEST(TDecRecMatrixTest, SparseMatrixEfficiency)
 {
   // Тестируем эффективность разреженной матрицы
@@ -456,21 +398,3 @@ TEST(TDecRecMatrixTest, FindElementIndex)
   EXPECT_EQ(mat.FindElementIndex(0, 1), -1); // Несуществующий элемент
   EXPECT_EQ(mat.FindElementIndex(1, 0), -1); // Несуществующий элемент
 }
-
-//TEST(TDecRecMatrixTest, ZeroElementRemoval)
-//{
-//  TDecRecMatrix<int> mat(3);
-//  mat(0, 0) = 1;
-//  mat(1, 1) = 2;
-//  mat(2, 2) = 3;
-//
-//  EXPECT_EQ(mat.GetNonZeroCount(), 3);
-//
-//  // Устанавливаем нулевое значение через оператор ()
-//  mat(1, 1) = 0;
-//  EXPECT_EQ(mat.GetNonZeroCount(), 2); // Элемент должен быть удален
-//
-//  // Проверяем, что элемент действительно удален
-//  EXPECT_EQ(mat(1, 1), 0);
-//  EXPECT_EQ(mat.FindElementIndex(1, 1), -1);
-//}

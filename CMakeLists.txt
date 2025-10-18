@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.1) #Проверка версии CMake.
 
-set(PROJECT_NAME BlasApp) #Создаем обычную локальную переменную с именем проекта
+set(PROJECT_NAME MatrixApp) #Создаем обычную локальную переменную с именем проекта
 project(${PROJECT_NAME}) # Название проекта
 
-set(application BlasMain) #Переменная с именем приложения
-set(library BlasLibrary) #Переменная с именем библиотеки
+set(application MatrixMain) #Переменная с именем приложения
+set(library MatrixLibrary) #Переменная с именем библиотеки
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Configs" FORCE) #Создается переменная CMAKE_CONFIGURATION_TYPES со значением "Debug;Release" и меткой/разделом Configs, переменная сохраниется в специальном файле доступном из всех файлов,
 if(NOT CMAKE_BUILD_TYPE) # проверка имеющихся у компилятора вариантов сборки
@@ -15,7 +15,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/stringlib) #Добавляем �
 #${CMAKE_CURRENT_SOURCE_DIR} - стандартная переменная с адресом рабочей директории
 
 add_subdirectory(main) #Добавляем директорию с под-CMakeList-ом, и выполняем под-CMakeList
-add_subdirectory(blaslib)
+add_subdirectory(matrixlib)
 add_subdirectory(gtest)
 add_subdirectory(test)
 
